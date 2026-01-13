@@ -1,0 +1,140 @@
+.criar-time {
+  background-color: #2d6a4f; /* Verde principal */
+  color: white;
+  text-align: center;
+  padding: 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.criar-time header {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.criar-time header button {
+  background-color: #40916c;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+}
+
+.form {
+  background: rgba(0, 0, 0, 0.15);
+  padding: 25px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+label {
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+input {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 6px rgba(82, 183, 136, 0.8);
+}
+
+button {
+  padding: 14px;
+  background-color: #52b788;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #40916c;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Lista de jogadores */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+ul li {
+  background: rgba(255, 255, 255, 0.15);
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+ul li button {
+  background-color: #d62828; /* Vermelho para deletar */
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  margin-left: 10px;
+}
+
+ul li button:hover {
+  background-color: #b81f1f;
+}
+
+/* Mensagens */
+.erro {
+  background-color: rgba(220, 53, 69, 0.3);
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.mensagem {
+  margin-top: 12px;
+  color: #c3e6cb;
+  font-size: 1.1rem;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .criar-time {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  button,
+  input {
+    font-size: 1rem;
+  }
+
+  .form {
+    padding: 15px;
+  }
+}

@@ -1,0 +1,53 @@
+<div class="home-container">
+  <button class="voltar-btn" (click)="voltarHome()">Voltar</button>
+
+  <div *ngIf="campeonato; else notFound" class="conteudo">
+
+    <!-- Informações do campeonato -->
+    <div class="layout-duas-colunas">
+      <h2>{{ campeonato.nome }}</h2>
+      <p><strong>Descrição:</strong> {{ campeonato.descricao }}</p>
+      <p><strong>Formato:</strong> {{ campeonato.formato }}</p>
+      <p><strong>Limite de times:</strong> {{ campeonato.numTimes }}</p>
+
+      <hr />
+
+      <h3>Times Participantes</h3>
+      <ul *ngIf="campeonato.times && campeonato.times.length > 0; else semTimes">
+        <li *ngFor="let time of campeonato.times" class="time-card">
+          <div class="time-header"><strong>{{ time.nome }}</strong></div>
+
+          <div class="jogadores">
+            <h4>Jogadores</h4>
+
+            <ul *ngIf="time.jogadores && time.jogadores.length > 0; else semJogadores">
+              <li *ngFor="let jogador of time.jogadores" class="jogador-item">
+                {{ jogador.nome }}
+                <small *ngIf="jogador.posicao">({{ jogador.posicao }})</small>
+              </li>
+            </ul>
+
+            <ng-template #semJogadores>
+              <p class="info-vazia">Nenhum jogador cadastrado.</p>
+            </ng-template>
+          </div>
+        </li>
+      </ul>
+
+      <ng-template #semTimes>
+        <p class="info-vazia">Nenhum time cadastrado ainda.</p>
+      </ng-template>
+
+      <div class="botoes-acao">
+        <button class="acao-btn" (click)="adicionarTimes()">➕ Adicionar Times</button>
+      </div>
+    </div>
+
+    <button class="acao-btn" (click)="Eliminatorias()"> Ver Eliminatórias </button>
+  </div>
+
+  <ng-template #notFound>
+    <p class="info-vazia">Campeonato não encontrado.</p>
+  </ng-template>
+
+</div>

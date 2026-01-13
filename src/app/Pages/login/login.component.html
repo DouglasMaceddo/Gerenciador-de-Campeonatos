@@ -1,0 +1,15 @@
+<div class="login-container">
+  <header>
+    <button (click)="voltarHome('Home')">Voltar</button>
+</header>
+    <h2>Login</h2>
+    <form (ngSubmit)="login()">
+      <input type="email" [(ngModel)]="email" placeholder="E-mail" name="email" required />
+      <input type="password" [(ngModel)]="password" placeholder="Senha" name="password" required />
+      <button type="submit">Entrar</button>
+      <button (click)="cadastro()">Cadastre-se</button>
+    </form>
+    <p>{{ message }}</p>
+  </div>
+  
+  

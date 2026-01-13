@@ -1,0 +1,73 @@
+.perfil-container {
+  background-color: #2d6a4f;
+  color: white;
+  text-align: center;
+  padding: 50px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: white;
+  color: #333;
+  width: 280px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 10px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card-header {
+  background-color: #52b788;
+  padding: 15px;
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.card-body {
+  padding: 15px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.card-footer {
+  padding: 15px;
+  text-align: center;
+  background-color: #f4f4f4;
+}
+
+button {
+  background-color: #52b788; /* Verde Claro */
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 180px;
+}
+
+button:hover {
+  background-color: #40916c; /* Cor de hover mais escura */
+}
+
+button:focus {
+  outline: none;
+}

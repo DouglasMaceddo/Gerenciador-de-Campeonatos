@@ -1,0 +1,48 @@
+/* App Component Styles */
+.home-container {
+    background-color: #2d6a4f; /* Verde */
+    color: white;
+    text-align: center;
+    padding: 50px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .header p {
+    font-size: 1.2rem;
+  }
+  
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .nav-button {
+    background-color: #52b788; /* Verde Claro */
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 200px;
+  }
+  
+  .nav-button:hover {
+    background-color: #40916c; /* Um verde mais escuro */
+  }
+  
+  .nav-button:focus {
+    outline: none;
+  }
+  

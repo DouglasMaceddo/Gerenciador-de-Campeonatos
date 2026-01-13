@@ -1,0 +1,12 @@
+<div class="cadastro-container">
+    <h2>Cadastrar</h2>
+    <form (ngSubmit)="cadastrar()">
+      <input type="email" [(ngModel)]="email" placeholder="E-mail" name="email" required />
+      <input type="password" [(ngModel)]="password" placeholder="Senha" name="password" required />
+      <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirmar Senha" name="confirmPassword" required />
+      <button type="submit">Cadastrar</button>
+      <button (click)="Login()"> Já Tenho conta</button>
+    </form>
+    <p>{{ message }}</p>
+  </div>
+  

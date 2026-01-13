@@ -1,0 +1,42 @@
+<header class="buttvoltar">
+  <button (click)="voltarHome('Home')">Voltar</button>
+</header>
+
+<div class="container">
+  <h1>Gerador de Times</h1>
+
+  <div class="form">
+    <input [(ngModel)]="novoJogador" placeholder="Nome do Jogador" />
+
+    <div>
+      <button (click)="addPlayers()">Adicionar Jogador</button>
+    </div>
+
+    <div>
+      <h2>Número de Jogadores por Time</h2>
+      <input type="number" [(ngModel)]="jogadoresportime" placeholder="Número de jogadores por time" min="1" />
+    </div>
+
+    <button (click)="drawTeams()">Sortear Times</button>
+  </div>
+
+  <div class="cards-container">
+    <div *ngIf="jogadores.length > 0" class="card">
+      <h2>Jogadores Cadastrados</h2>
+      <ul>
+        <li *ngFor="let player of jogadores">{{ player }}</li>
+      </ul>
+      <p>Total de Jogadores Cadastrados: {{ jogadores.length }}</p> 
+    </div>
+
+    <div *ngIf="times.length > 0" class="card">
+      <h2>Times Sorteados</h2>
+      <div *ngFor="let team of times; let i = index" class="team">
+        <h3>Time {{i + 1}}</h3>
+        <ul>
+          <li *ngFor="let player of team">{{ player }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

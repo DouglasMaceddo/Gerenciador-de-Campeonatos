@@ -1,0 +1,32 @@
+<div class="criar-campeonato">
+    <header>
+        <button (click)="voltarHome('Home')">Voltar</button>
+    </header>
+    <h1>Criação de Campeonato</h1>
+    <div class="form">
+        <label for="nomeCampeonato">Nome do Campeonato:</label>
+        <input type="text" id="nomeCampeonato" [(ngModel)]="nomeCampeonato" placeholder="Nome do Campeonato" />
+
+        <label for="descricao">Descrição do Campeonato:</label>
+        <textarea id="descricao" [(ngModel)]="descricao" placeholder="Descrição do Campeonato"></textarea>
+
+        <label for="formato">Formato do Campeonato:</label>
+        <select id="formato" [(ngModel)]="formato">
+            <option value="eliminatorio">Eliminatório</option>
+            <option value="grupos">Grupos</option>
+        </select>
+
+        <label for="numTimes">Número de Times:</label>
+        <input type="number" id="numTimes" [(ngModel)]="numTimes" min="2" />
+
+        <button (click)="criarCampeonato()">Criar Campeonato</button>
+    </div>
+
+    <div *ngIf="campeonatoCriado" class="campeonato-criado">
+        <h2>Campeonato Criado com Sucesso!</h2>
+        <p><strong>Nome:</strong> {{campeonatoCriado.nome}}</p>
+        <p><strong>Descrição:</strong> {{campeonatoCriado.descricao}}</p>
+        <p><strong>Formato:</strong> {{campeonatoCriado.formato}}</p>
+        <p><strong>Número de Times:</strong> {{campeonatoCriado.numTimes}}</p>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="perfil-container">
+  <button (click)="logout()">Sair</button>
+
+  <h2>Campeonatos Criados</h2>
+
+  <div class="cards-container">
+    <div *ngFor="let campeonato of campeonatos" class="card">
+      <div class="card-header">
+        <h2>{{ campeonato.nome }}</h2>
+      </div>
+      <div class="card-body">
+        <p><strong>Descrição:</strong> {{ campeonato.descricao }}</p>
+        <p><strong>Formato:</strong> {{ campeonato.formato }}</p>
+        <p><strong>Número de Times:</strong> {{ campeonato.numTimes }}</p>
+      </div>
+      <div class="card-footer">
+        <button (click)="visualizarDetalhes(campeonato.id)">Visualizar Campeonato</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="campeonatos.length === 0">
+    <p>Nenhum campeonato criado ainda.</p>
+  </div>
+
+  <button (click)="navegarCriarCamp()">Criar Campeonato</button>
+</div>

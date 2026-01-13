@@ -1,0 +1,357 @@
+/* CONTAINER PRINCIPAL */
+.home-container {
+  background-color: #2d6a4f;
+  /* Verde escuro */
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* CONTEÚDO CENTRAL */
+.conteudo {
+  width: 100%;
+  max-width: 520px;
+  text-align: left;
+}
+
+/* BOTÃO VOLTAR */
+.voltar-btn {
+  background-color: #52b788;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 10px 20px;
+  margin-bottom: 25px;
+}
+
+.voltar-btn:hover {
+  background-color: #40916c;
+}
+
+/* TÍTULOS */
+h2,
+h3,
+h4 {
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* TEXTO DE INFORMAÇÃO VAZIA */
+.info-vazia {
+  color: #dafee0;
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 5px 0;
+}
+
+/* LISTA PADRÃO */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* CARD DE TIME */
+.time-card {
+  background: #52b788;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 12px 0;
+  color: white;
+}
+
+.time-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* LISTA DE JOGADORES */
+.jogadores h4 {
+  margin: 10px 0 5px;
+  font-size: 1.05rem;
+}
+
+.jogadores ul {
+  padding-left: 0;
+}
+
+.jogador-item {
+  background: #40916c;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* BOTÕES DE AÇÃO */
+.botoes-acao {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.acao-btn {
+  background-color: #52b788;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 1.05rem;
+  transition: 0.3s;
+}
+
+.acao-btn:hover {
+  background-color: #40916c;
+}
+
+/* LISTA DE CONFRONTOS */
+.lista-confrontos li {
+  background: #52b788;
+  margin: 7px 0;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* MENSAGEM DE ERRO/INFO */
+.mensagem {
+  margin-top: 15px;
+  font-size: 1rem;
+  background: #40916c;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  color: #fff;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 480px) {
+
+  .voltar-btn,
+  .acao-btn {
+    width: 100%;
+  }
+
+  .time-card {
+    padding: 12px;
+  }
+
+  .jogador-item {
+    font-size: 0.9rem;
+  }
+}
+
+.tabelas-lado-a-lado {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.coluna {
+  flex: 1;
+}
+
+/* Tabelas responsivas */
+@media (max-width: 900px) {
+  .tabelas-lado-a-lado {
+    flex-direction: column;
+  }
+}
+
+.confrontos-container {
+  margin-top: 18px;
+  width: 100%;
+  max-width: 760px;
+}
+
+.tabela-confrontos {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabela-confrontos th {
+  background-color: #2d6a4f;
+  color: white;
+  padding: 8px;
+  text-align: center;
+}
+
+.tabela-confrontos td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.placares {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.input-placar {
+  width: 56px;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.tabela-classificacao {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabela-classificacao th {
+  background-color: #2d6a4f;
+  color: white;
+  padding: 8px;
+}
+
+.tabela-classificacao td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+/* Fundo escuro do modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(3px);
+}
+
+/* Conteúdo do modal */
+.modal-content {
+  background: #fff;
+  width: 95%;
+  max-width: 520px;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  animation: modalFade 0.25s ease-out;
+}
+
+/* Título */
+.modal-content h3 {
+  margin-top: 0;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  color: #444;
+}
+
+/* Inputs */
+.modal-content select,
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: 1px solid #bbb;
+  margin-bottom: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.modal-content select:focus,
+.modal-content input:focus {
+  border-color: #007bff;
+}
+
+/* Botões */
+.modal-btns {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.modal-btns button {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.confirmar-btn {
+  background: #007bff;
+  color: white;
+  margin-right: 10px;
+}
+
+.confirmar-btn:hover {
+  background: #0056d2;
+}
+
+.cancelar-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.cancelar-btn:hover {
+  background: #c0392b;
+}
+
+/* Animação de entrada */
+@keyframes modalFade {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.eliminatoria-container {
+  padding: 20px;
+}
+
+h2 {
+  margin-top: 25px;
+  color: #333;
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.jogo {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+  font-size: 18px;
+}

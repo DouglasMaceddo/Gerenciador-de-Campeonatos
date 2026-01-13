@@ -1,0 +1,42 @@
+<div class="criar-time">
+  <header>
+    <button (click)="voltarHome()">Voltar</button>
+  </header>
+
+  <h1>Criar Time (Campeonato)</h1>
+
+  <div *ngIf="campIdNotFound" class="erro">
+    Campeonato não encontrado.
+  </div>
+
+  <div class="form">
+    <label>Nome do Time:</label>
+    <input type="text" [(ngModel)]="nomeTime" placeholder="Nome do Time" />
+
+    <label>Logo URL (opcional):</label>
+    <input type="text" [(ngModel)]="logoUrl" placeholder="https://..." />
+
+    <hr />
+
+    <h3>Adicionar Jogador</h3>
+    <input type="text" [(ngModel)]="nomeJogador" placeholder="Nome do jogador" />
+    <input type="text" [(ngModel)]="posicaoJogador" placeholder="Posição (opcional)" />
+    <input type="number" [(ngModel)]="numeroJogador" placeholder="Número (opcional)" />
+    <button (click)="adicionarJogador()">Adicionar Jogador</button>
+
+    <ul>
+      <li *ngFor="let j of jogadores">
+        {{ j.nome }} <small *ngIf="j.posicao">({{ j.posicao }})</small>
+        <button (click)="removerJogadorTemp(j.id)">Remover</button>
+      </li>
+    </ul>
+
+    <button (click)="adicionarTime()">Salvar Time</button>
+
+    <div *ngIf="campeonato">
+      <p>Times adicionados: {{ campeonato.times.length || 0 }} / {{ campeonato.numTimes }}</p>
+    </div>
+
+    <p *ngIf="mensagem" class="mensagem">{{ mensagem }}</p>
+  </div>
+</div>
