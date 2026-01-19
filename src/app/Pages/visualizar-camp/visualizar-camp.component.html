@@ -12,6 +12,9 @@
 
       <hr />
 
+      <button class="acao-btn" (click)="Eliminatorias()"> Gerar Confrontos </button>
+      <button class="acao-btn"> Adicionar Jogadores </button>
+
       <h3>Times Participantes</h3>
       <ul *ngIf="campeonato.times && campeonato.times.length > 0; else semTimes">
         <li *ngFor="let time of campeonato.times" class="time-card">
@@ -42,8 +45,6 @@
         <button class="acao-btn" (click)="adicionarTimes()">➕ Adicionar Times</button>
       </div>
     </div>
-
-    <button class="acao-btn" (click)="Eliminatorias()"> Ver Eliminatórias </button>
   </div>
 
   <ng-template #notFound>

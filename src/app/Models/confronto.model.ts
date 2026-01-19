@@ -8,6 +8,9 @@ export interface Confronto {
   rodada: number;
   golsA?: number | null;
   golsB?: number | null;
+  penaltisA?:number;
+  penaltisB?: number;
+  vencedor?: Time;
   finalizado?: boolean;
   eventos: EventoPartida[];
   fase?: 'grupos' | 'quartas' | 'semis' | 'final';

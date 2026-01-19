@@ -102,12 +102,13 @@ ul {
 .acao-btn {
   background-color: #52b788;
   border: none;
-  padding: 12px;
+  padding: 10px;
   border-radius: 6px;
   cursor: pointer;
   color: white;
   font-size: 1.05rem;
   transition: 0.3s;
+  margin: 3px
 }
 
 .acao-btn:hover {

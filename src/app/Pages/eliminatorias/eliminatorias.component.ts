@@ -19,8 +19,6 @@ export class EliminatoriasComponent implements OnInit {
   mensagem = '';
   classificacao: any[] = [];
   artilheiros: any[] = [];
-  amarelos: any[] = [];
-  vermelhos: any[] = [];
   quartas: Confronto[] = [];
   semis: Confronto[] = [];
   final: Confronto[] = [];
@@ -29,7 +27,6 @@ export class EliminatoriasComponent implements OnInit {
   confrontoSelecionado: Confronto | null = null;
   eventoJogadorId = '';
   eventoTipo: 'gol' | 'amarelo' | 'vermelho' = 'gol';
-  ordemFases = ['grupos', 'quartas', 'semis', 'final'];
 
   constructor(
     private route: ActivatedRoute,
@@ -49,6 +46,8 @@ export class EliminatoriasComponent implements OnInit {
 
     this.reload();
     this.atualizarDados();
+    this.rodadaSelecionada = this.detectRodadaAtual();
+
   }
 
   reload(): void {
@@ -63,11 +62,7 @@ export class EliminatoriasComponent implements OnInit {
   atualizarDados(): void {
     this.artilheiros = this.camp.artilheiros ?? [];
     this.classificacao = this.campeonatoService.calcularClassificacao(this.camp.id);
-    
-  }
 
-  faseAtualIndex(): number {
-    return this.ordemFases.indexOf(this.camp.fase!);
   }
 
   onPlacarChange(confronto: Confronto): void {
@@ -94,43 +89,53 @@ export class EliminatoriasComponent implements OnInit {
   }
 
   atualizarPlacar(
-  confronto: Confronto | null,
-  fase: 'quartas' | 'semis' | 'final'
-): void {
+    confronto: Confronto | null,
+    fase: 'quartas' | 'semis' | 'final'
+  ): void {
 
-  const lista = this.camp[fase] as Confronto[];
+    const lista = this.camp[fase] as Confronto[];
 
-  const pendente = lista.some(
-    c => c.golsA == null || c.golsB == null
-  );
+    for (const c of lista) {
+      if (c.golsA == null || c.golsB == null) {
+        this.mensagem = 'Ainda existem jogos sem placar.';
+        return;
+      }
 
-  if (pendente) {
-    this.mensagem = 'Ainda existem jogos sem placar.';
-    return;
+      // ⚠️ empate → exige pênaltis
+      if (c.golsA === c.golsB) {
+        if (c.penaltisA == null || c.penaltisB == null) {
+          this.mensagem = 'Preencha o placar das penalidades.';
+          return;
+        }
+
+        if (c.penaltisA === c.penaltisB) {
+          this.mensagem = 'Pênaltis não podem terminar empatados.';
+          return;
+        }
+      }
+
+      c.finalizado = true;
+    }
+
+    if (fase === 'quartas') {
+      this.mensagem = this.campeonatoService.gerarSemis(this.camp);
+      this.camp.fase = 'semis';
+    }
+
+    if (fase === 'semis') {
+      this.mensagem = this.campeonatoService.gerarFinal(this.camp);
+      this.camp.fase = 'final';
+    }
+
+    if (fase === 'final') {
+      this.camp.fase = 'encerrado';
+      this.mensagem = 'Campeonato encerrado!';
+    }
+
+    this.campeonatoService.save(this.camp);
+    this.reload();
+    this.atualizarDados();
   }
-
-  lista.forEach(c => c.finalizado = true);
-
-  if (fase === 'quartas') {
-    this.mensagem = this.campeonatoService.gerarSemis(this.camp);
-    this.camp.fase = 'semis';
-  }
-
-  if (fase === 'semis') {
-    this.mensagem = this.campeonatoService.gerarFinal(this.camp);
-    this.camp.fase = 'final';
-  }
-
-  if (fase === 'final') {
-    this.camp.fase = 'encerrado';
-    this.mensagem = 'Campeonato encerrado!';
-  }
-
-  this.campeonatoService.save(this.camp);
-  this.reload();
-  this.atualizarDados();
-}
-
 
 
   atualizarPlacarPelosEventos(confronto: Confronto): void {
@@ -193,12 +198,26 @@ export class EliminatoriasComponent implements OnInit {
       tipo: this.eventoTipo
     };
 
+    switch (this.eventoTipo) {
+      case 'gol':
+        jogador.gols = (jogador.gols || 0) + 1;
+        break;
+
+      case 'amarelo':
+        jogador.amarelos = (jogador.amarelos || 0) + 1;
+        break;
+
+      case 'vermelho':
+        jogador.vermelhos = (jogador.vermelhos || 0) + 1;
+        break;
+    }
+
     this.confrontoSelecionado.eventos ??= [];
     this.confrontoSelecionado.eventos.push(evento);
     this.atualizarPlacarPelosEventos(this.confrontoSelecionado);
     this.reload();
     this.atualizarDados();
-    
+
     this.mensagem = 'Evento registrado com sucesso!';
     this.fecharModal();
   }
@@ -208,21 +227,6 @@ export class EliminatoriasComponent implements OnInit {
     return this.camp.times?.find(t =>
       t.jogadores?.some(j => j.id === jogadorId)
     );
-  }
-
-  gerarQuartas(): void {
-    this.mensagem = this.campeonatoService.gerarQuartas(this.camp);
-    this.reload();
-  }
-
-  gerarSemi(): void {
-    this.mensagem = this.campeonatoService.gerarSemis(this.camp);
-    this.reload();
-  }
-
-  gerarFinais(): void {
-    this.mensagem = this.campeonatoService.gerarFinal(this.camp);
-    this.reload();
   }
 
   private detectRodadaAtual(): number | null {

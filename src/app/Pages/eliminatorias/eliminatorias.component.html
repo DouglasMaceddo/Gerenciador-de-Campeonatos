@@ -20,7 +20,8 @@
         <h3>Confrontos</h3>
 
         <!-- FASE DE GRUPOS -->
-        <section *ngIf="faseAtualIndex() >= 0">
+        <section
+          *ngIf="camp.fase === 'grupos' || camp.fase === 'quartas' || camp.fase === 'semis' || camp.fase === 'final'">
           <h4>Fase de Grupos</h4>
 
           <table class="tabela">
@@ -28,16 +29,14 @@
               <td>{{ c.timeA.nome }}</td>
 
               <td class="placar">
-                <input type="number" [(ngModel)]="c.golsA" [disabled]="camp.fase !== 'grupos'"
-                  (change)="onPlacarChange(c)">
+                <input type="number" min="0" [(ngModel)]="c.golsA" [disabled]="''" (change)="onPlacarChange(c)">
                 x
-                <input type="number" [(ngModel)]="c.golsB" [disabled]="camp.fase !== 'grupos'"
-                  (change)="onPlacarChange(c)">
+                <input type="number" min="0" [(ngModel)]="c.golsB" [disabled]="''" (change)="onPlacarChange(c)">
               </td>
 
               <td>{{ c.timeB.nome }}</td>
               <td>
-                <button [disabled]="camp.fase !== 'grupos'"  class="evento-btn" (click)="abrirEventos(c)">
+                <button [disabled]="camp.fase !== 'grupos'" class="evento-btn" (click)="abrirEventos(c)">
                   ⚽ Eventos
                 </button>
               </td>
@@ -50,22 +49,42 @@
         </section>
 
         <!-- QUARTAS -->
-        <section *ngIf="faseAtualIndex() >= 1">
+        <section *ngIf="camp.fase === 'quartas'">
           <h4>QUARTAS DE FINAL</h4>
 
           <table class="tabela">
-            <tr *ngFor="let q of quartas">
-              <td>{{ q.timeA.nome }}</td>
-              <td class="placar">
-                <input type="number" [(ngModel)]="q.golsA" [disabled]="camp.fase !== 'quartas'">
-                x
-                <input type="number" [(ngModel)]="q.golsB" [disabled]="camp.fase !== 'quartas'">
-              </td>
-              <td>{{ q.timeB.nome }}</td>
-              <td>
-                <button [disabled]="camp.fase !== 'quartas'" class="evento-btn" (click)="abrirEventos(q)">⚽ Eventos</button>
-              </td>
-            </tr>
+            <ng-container *ngFor="let q of quartas">
+
+              <!-- JOGO -->
+              <tr>
+                <td>{{ q.timeA.nome }}</td>
+
+                <td class="placar">
+                  <input type="number" min="0" [(ngModel)]="q.golsA" [disabled]="camp.fase !== 'quartas'">
+                  x
+                  <input type="number" min="0" [(ngModel)]="q.golsB" [disabled]="camp.fase !== 'quartas'">
+                </td>
+
+                <td>{{ q.timeB.nome }}</td>
+
+                <td>
+                  <button class="evento-btn" [disabled]="camp.fase !== 'quartas'" (click)="abrirEventos(q)">
+                    ⚽ Eventos
+                  </button>
+                </td>
+              </tr>
+
+              <!-- PENALIDADES -->
+              <tr *ngIf="q.golsA !== null && q.golsA === q.golsB">
+                <td colspan="4" class="penaltis">
+                  🥅 Pênaltis:
+                  <input type="number" min="0" [(ngModel)]="q.penaltisA">
+                  x
+                  <input type="number" min="0" [(ngModel)]="q.penaltisB">
+                </td>
+              </tr>
+
+            </ng-container>
           </table>
 
           <button class="acao-btn" *ngIf="camp.fase === 'quartas'" (click)="atualizarPlacar(null, 'quartas')">
@@ -74,22 +93,45 @@
         </section>
 
         <!-- SEMIS -->
-        <section *ngIf="faseAtualIndex() >= 1">
+        <section
+          *ngIf="camp.fase === 'grupos' || camp.fase === 'quartas' || camp.fase === 'semis' || camp.fase === 'final'">
           <h4>SEMI FINAL</h4>
 
           <table class="tabela">
-            <tr *ngFor="let s of semis">
-              <td>{{ s.timeA.nome }}</td>
-              <td class="placar">
-                <input type="number" [(ngModel)]="s.golsA" [disabled]="camp.fase !== 'semis'">
+            <ng-container *ngFor="let s of semis">
+
+              <!-- JOGO -->
+              <tr>
+                <td>{{ s.timeA.nome }}</td>
+
+                <td class="placar">
+                  <input type="number" min="0" [(ngModel)]="s.golsA" [disabled]="''">
+                  x
+                  <input type="number" min="0" [(ngModel)]="s.golsB" [disabled]="''">
+                </td>
+
+                <td>{{ s.timeB.nome }}</td>
+
+                <td>
+                  <button class="evento-btn" [disabled]="camp.fase !== 'semis'" (click)="abrirEventos(s)">
+                    ⚽ Eventos
+                  </button>
+                </td>
+              </tr>
+
+              <!-- PENALIDADES -->
+              <tr *ngIf="s.golsA !== null && s.golsA === s.golsB">
+                <td colspan="4" class="penaltis">
+                  🥅 Pênaltis:
+              <tr class="placar">
+                <input type="number" min="0" [(ngModel)]="s.penaltisA" [disabled]="camp.fase !== 'semis'">
                 x
-                <input type="number" [(ngModel)]="s.golsB" [disabled]="camp.fase !== 'semis'">
+                <input type="number" min="0" [(ngModel)]="s.penaltisB" [disabled]="camp.fase !== 'semis'">
+              </tr>
               </td>
-              <td>{{ s.timeB.nome }}</td>
-              <td>
-                <button [disabled]="camp.fase !== 'semis'" class="evento-btn" (click)="abrirEventos(s)">⚽ Eventos</button>
-              </td>
-            </tr>
+              </tr>
+
+            </ng-container>
           </table>
           <button class="acao-btn" *ngIf="camp.fase === 'semis'" (click)="atualizarPlacar(null, 'semis')">
             Finalizar Semi Final
@@ -97,24 +139,47 @@
         </section>
 
         <!-- FINAL -->
-        <section *ngIf="faseAtualIndex() >= 1">
+        <section *ngIf="camp.fase === 'final'">
           <h4>FINAL</h4>
 
           <table class="tabela">
-            <tr *ngFor="let f of final">
-              <td>{{ f.timeA.nome }}</td>
-              <td class="placar">
-                <input type="number" [(ngModel)]="f.golsA" [disabled]="camp.fase !== 'final'">
+            <ng-container *ngFor="let f of final">
+
+              <!-- JOGO -->
+              <tr>
+                <td>{{ f.timeA.nome }}</td>
+
+                <td class="placar">
+                  <input type="number" min="0" [(ngModel)]="f.golsA" [disabled]="''">
+                  x
+                  <input type="number" min="0" [(ngModel)]="f.golsB" [disabled]="''">
+                </td>
+
+                <td>{{ f.timeB.nome }}</td>
+
+                <td>
+                  <button class="evento-btn" [disabled]="camp.fase !== 'final'" (click)="abrirEventos(f)">
+                    ⚽ Eventos
+                  </button>
+                </td>
+              </tr>
+
+              <!-- PENALIDADES -->
+              <tr *ngIf="f.golsA !== null && f.golsA === f.golsB">
+                <td colspan="4" class="penaltis">
+                  🥅 Pênaltis:
+              <tr class="placar">
+                <input type="number" min="0" [(ngModel)]="f.penaltisA" [disabled]="camp.fase !== 'final'">
                 x
-                <input type="number" [(ngModel)]="f.golsB" [disabled]="camp.fase !== 'final'">
+                <input type="number" min="0" [(ngModel)]="f.penaltisB" [disabled]="camp.fase !== 'final'">
+              </tr>
               </td>
-              <td>{{ f.timeB.nome }}</td>
-              <td>
-                <button class="evento-btn" (click)="abrirEventos(f)">⚽ Eventos</button>
-              </td>
-            </tr>
+              </tr>
+
+            </ng-container>
           </table>
-          <button class="acao-btn" *ngIf="camp.fase !== 'final'" (click)="atualizarPlacar(null, 'final')">
+
+          <button class="acao-btn" *ngIf="camp.fase === 'final'" (click)="atualizarPlacar(null, 'final')">
             Finalizar Final
           </button>
         </section>
@@ -159,12 +224,37 @@
         <h3>Artilharia</h3>
 
         <table class="tabela">
+          <thead>
+            <tr>
+              <th>Jogador</th>
+              <th>Time</th>
+              <th>Gols</th>
+            </tr>
+          </thead>
           <tr *ngFor="let a of artilheiros">
             <td>{{ a.nome }}</td>
             <td>{{ a.time }}</td>
             <td>{{ a.gols }}</td>
           </tr>
         </table>
+        <div>
+          <h3>Cartões</h3>
+
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Jogador</th>
+                <th>Cartão Amarelo</th>
+                <th>Cartão Vermelho</th>
+              </tr>
+            </thead>
+            <tr *ngFor="let j of artilheiros">
+              <td>{{ j.nome }}</td>
+              <td>{{ j.amarelo }}</td>
+              <td>{{ j.vermelho }}</td>
+            </tr>
+          </table>
+        </div>
       </div>
 
     </section>
@@ -214,9 +304,9 @@
 
 
       <select [(ngModel)]="eventoTipo">
-        <option value="gol">Gol</option>
-        <option value="amarelo">Amarelo</option>
-        <option value="vermelho">Vermelho</option>
+        <option value="gol">⚽ Gol</option>
+        <option value="amarelo">🟨 Amarelo</option>
+        <option value="vermelho">🟥 Vermelho</option>
       </select>
 
       <div class="modal-acoes">

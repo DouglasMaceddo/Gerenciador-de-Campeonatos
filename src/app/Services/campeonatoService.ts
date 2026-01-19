@@ -45,7 +45,6 @@ export class CampeonatoService {
       ...(camp.final ?? [])
     ]) {
       for (const ev of confronto.eventos ?? []) {
-        if (ev.tipo !== 'gol') continue;
 
         if (!mapa[ev.jogadorId]) {
           const time = camp.times.find(t => t.id === ev.timeId);
@@ -54,12 +53,27 @@ export class CampeonatoService {
             id: ev.jogadorId,
             nome: ev.jogadorNome,
             time: time?.nome ?? '',
-            gols: 1
+            gols: 0,
+            amarelo: 0,
+            vermelho: 0
           };
-        } else {
-          mapa[ev.jogadorId].gols++;
+        }
+        switch (ev.tipo) {
+          case 'gol':
+            mapa[ev.jogadorId].gols++;
+            break;
+          case 'amarelo':
+            mapa[ev.jogadorId].amarelo++;
+            break;
+          case 'vermelho':
+            mapa[ev.jogadorId].vermelho++;
+            break;
         }
       }
+
+      camp.artilheiros = Object.values(mapa).sort(
+        (a: any, b: any) => b.gols - a.gols
+      );
     }
 
     camp.artilheiros = Object.values(mapa).sort(
@@ -189,7 +203,6 @@ export class CampeonatoService {
     return 'Placar atualizado';
   }
 
-
   public calcularClassificacao(campId: string): any[] {
     const campeonato = this.getById(campId);
     if (!campeonato) return [];
@@ -245,26 +258,26 @@ export class CampeonatoService {
   private vencedor(c: Confronto): Time {
     const gA = c.golsA ?? 0;
     const gB = c.golsB ?? 0;
-    return gA > gB ? c.timeA : c.timeB;
-  }
 
-  gerarQuartas(camp: Campeonato): string {
+    // vitória no tempo normal
+    if (gA > gB) return c.timeA;
+    if (gB > gA) return c.timeB;
 
-    if (!camp.classificados || camp.classificados.length < 8) {
-      return 'Times insuficientes para quartas.';
+    // ⚠️ empate → pênaltis manuais
+    if (c.penaltisA == null || c.penaltisB == null) {
+      throw new Error('Pênaltis não informados.');
     }
 
-    camp.quartas = [
-      this.criarConfronto(camp.classificados[0], camp.classificados[7], 'quartas'),
-      this.criarConfronto(camp.classificados[3], camp.classificados[4], 'quartas'),
-      this.criarConfronto(camp.classificados[1], camp.classificados[6], 'quartas'),
-      this.criarConfronto(camp.classificados[2], camp.classificados[5], 'quartas')
-    ];
+    if (c.penaltisA === c.penaltisB) {
+      throw new Error('Pênaltis não podem empatar.');
+    }
 
-    camp.fase = 'quartas';
-    this.saveOne(camp);
+    return c.penaltisA > c.penaltisB ? c.timeA : c.timeB;
+  }
 
-    return 'Quartas de final geradas!';
+
+  private gerarPenaltis(): number {
+    return Math.floor(Math.random() * 5) + 1; // 1 a 5
   }
 
   gerarSemis(camp: Campeonato): string {
@@ -355,38 +368,47 @@ export class CampeonatoService {
     }
 
     camp.confrontos.forEach(c => c.finalizado = true);
+
     this.calcularClassificacao(camp.id);
 
-    camp.classificados = camp.classificacao!
-      .map(c => camp.times.find(t => t.id === c.id)!)
-      .filter(Boolean);
-
-    const qtd = camp.classificados.length;
-
-    if (qtd >= 8) {
-      return this.gerarQuartas(camp);
+    if (!camp.classificacao || camp.classificacao.length < 4) {
+      return 'É necessário no mínimo 4 times para o mata-mata.';
     }
 
-    if (qtd >= 4) {
+    const classificados = camp.classificacao
+      .map(c => camp.times.find(t => t.id === c.id))
+      .filter((t): t is Time => !!t);
+
+    // 🔀 CASO 1 — QUARTAS
+    if (classificados.length >= 8) {
+      const top8 = classificados.slice(0, 8);
+
+      camp.quartas = [
+        this.criarConfronto(top8[0], top8[7], 'quartas'),
+        this.criarConfronto(top8[3], top8[4], 'quartas'),
+        this.criarConfronto(top8[1], top8[6], 'quartas'),
+        this.criarConfronto(top8[2], top8[5], 'quartas'),
+      ];
+
+      camp.fase = 'quartas';
+    }
+
+    // 🔀 CASO 2 — SEMIS DIRETO
+    else {
+      const top4 = classificados.slice(0, 4);
+
       camp.semis = [
-        this.criarConfronto(camp.classificados[0], camp.classificados[3], 'semis'),
-        this.criarConfronto(camp.classificados[1], camp.classificados[2], 'semis')
+        this.criarConfronto(top4[0], top4[3], 'semis'),
+        this.criarConfronto(top4[1], top4[2], 'semis'),
       ];
+
       camp.fase = 'semis';
-      this.saveOne(camp);
-      return 'Semifinais geradas automaticamente!';
     }
 
-    if (qtd >= 2) {
-      camp.final = [
-        this.criarConfronto(camp.classificados[0], camp.classificados[1], 'final')
-      ];
-      camp.fase = 'final';
-      this.saveOne(camp);
-      return 'Final gerada automaticamente!';
-    }
+    camp.classificados = classificados;
+    this.saveOne(camp);
 
-    return 'Times insuficientes para fase eliminatória.';
+    return 'Fase de grupos encerrada com sucesso!';
   }
 
   updatePlacarEliminatoria(
