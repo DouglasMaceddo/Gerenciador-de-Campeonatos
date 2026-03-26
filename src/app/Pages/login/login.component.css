@@ -1,143 +1,123 @@
+/* FUNDO */
 .login-container {
-    background-color: #2d6a4f; /* Verde */
-    color: white;
-    text-align: center;
-    padding: 50px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .login-container h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
-  .login-container form {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .login-container input {
-    padding: 15px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-  
-  .login-container button {
-    padding: 15px;
-    background-color: #52b788; /* Verde Claro */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
-    width: 100%;
-  }
-  
-  .login-container button:hover {
-    background-color: #40916c; /* Verde mais escuro */
-  }
-  
-  .login-container button:focus {
-    outline: none;
-  }
-  .base-container {
-    background-color: #2d6a4f; /* Verde */
-    color: white;
-    text-align: center;
-    padding: 50px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
-  form {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  input {
-    padding: 15px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-  
-  input:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(82, 183, 136, 0.7); /* Efeito ao focar */
-  }
-  
-  button {
-    padding: 15px;
-    background-color: #52b788; /* Verde Claro */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
-    width: 100%;
-  }
-  
-  button:hover {
-    background-color: #40916c; /* Verde mais escuro */
-  }
-  
-  button:focus {
-    outline: none;
-  }
-  
-  p {
-    font-size: 1.1rem;
-    color: #f0f0f0;
-    margin-top: 10px;
-  }
-  
-  /* Estilo para o erro ou mensagem de sucesso */
-  .message {
-    color: #f8d7da; /* Vermelho suave para erros */
-    font-size: 1rem;
-  }
-  
-  .success-message {
-    color: #c3e6cb; /* Verde suave para sucesso */
-  }
-  
-  /* Responsividade */
-  @media (max-width: 600px) {
-    .base-container {
-      padding: 20px;
-    }
-  
-    h2 {
-      font-size: 2rem;
-    }
-  
-    input,
-    button {
-      font-size: 1rem;
-    }
-  }
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('/fundo.jpg') no-repeat center center;
+
+  background-size: cover;
+
+  min-height: 100vh;
+  width: 100%;
+  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* HEADER */
+.login-container header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+/* BOTÃO VOLTAR */
+.login-container header button {
+  background: #1b66ff;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 8px 15px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+
+}
+
+.login-container header button:hover {
+  background: #00cef5;
+}
+
+/* FORM */
+.login-container form {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 350px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.btn-voltar {
+  background: #1b66ff;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.btn-voltar:hover {
+  background: #554af5;
+  transform: scale(1.05);
+}
+
+/* TÍTULO */
+.login-container h2 {
+  position: absolute;
+  top: 150px;
+  color: #ffffff;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+/* INPUTS */
+input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* BOTÃO PRINCIPAL */
+button[type="submit"] {
+  background: #1b66ff;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+button[type="submit"]:hover {
+  background: #554af5;
+  transform: scale(1.05);
+}
+
+/* BOTÃO CADASTRO */
+.login-container form button:not([type="submit"]) {
+  background: transparent;
+  color: #1b66ff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+/* MENSAGEM */
+p {
+  color: #ffffff;
+  margin-top: 15px;
+  text-align: center;
+}

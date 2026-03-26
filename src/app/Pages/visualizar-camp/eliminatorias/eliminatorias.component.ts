@@ -2,10 +2,10 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Campeonato } from '../../Models/camp.model';
-import { Confronto } from '../../Models/confronto.model';
-import { EventoPartida } from '../../Models/eventoPartida.model';
-import { CampeonatoService } from '../../Services/campeonatoService';
+import { Campeonato } from '../../../Models/camp.model';
+import { Confronto } from '../../../Models/confronto.model';
+import { EventoPartida } from '../../../Models/eventoPartida.model';
+import { CampeonatoService } from '../../../Services/campeonatoService';
 
 @Component({
   selector: 'app-eliminatorias',
@@ -16,6 +16,7 @@ import { CampeonatoService } from '../../Services/campeonatoService';
 })
 export class EliminatoriasComponent implements OnInit {
   camp!: Campeonato;
+  modoPublico = false;
   mensagem = '';
   classificacao: any[] = [];
   artilheiros: any[] = [];
@@ -36,6 +37,10 @@ export class EliminatoriasComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    const publico = this.route.snapshot.queryParamMap.get('publico');
+
+    this.modoPublico = publico === 'true';
+
     if (!id) return;
 
     const camp = this.campeonatoService.getById(id);
@@ -53,7 +58,6 @@ export class EliminatoriasComponent implements OnInit {
   reload(): void {
     const atualizado = this.campeonatoService.getById(this.camp.id)!;
     this.camp = atualizado;
-
     this.quartas = atualizado.quartas ?? [];
     this.semis = atualizado.semis ?? [];
     this.final = atualizado.final ?? [];
@@ -66,6 +70,7 @@ export class EliminatoriasComponent implements OnInit {
   }
 
   onPlacarChange(confronto: Confronto): void {
+    if (this.modoPublico) return;
     if (!this.camp) return;
 
     confronto.golsA = confronto.golsA != null ? Number(confronto.golsA) : null;
@@ -77,12 +82,16 @@ export class EliminatoriasComponent implements OnInit {
   }
 
   gerarFaseDeGrupos(): void {
+    if (this.modoPublico) return;
+
     this.mensagem = this.campeonatoService.gerarFaseDeGrupos(this.camp);
     this.reload();
     this.atualizarDados();
   }
 
   finalizarFaseDeGrupos(): void {
+    if (this.modoPublico) return;
+
     this.mensagem = this.campeonatoService.finalizarFaseDeGrupos(this.camp.id);
     this.reload();
     this.atualizarDados();
@@ -135,10 +144,13 @@ export class EliminatoriasComponent implements OnInit {
     this.campeonatoService.save(this.camp);
     this.reload();
     this.atualizarDados();
+    if (this.modoPublico) return;
   }
 
 
   atualizarPlacarPelosEventos(confronto: Confronto): void {
+    if (this.modoPublico) return;
+
     confronto.eventos = confronto.eventos || [];
 
     confronto.golsA = confronto.eventos.filter(
@@ -165,6 +177,8 @@ export class EliminatoriasComponent implements OnInit {
   }
 
   abrirEventos(confronto: Confronto): void {
+    if (this.modoPublico) return;
+
     this.confrontoSelecionado = confronto;
     this.eventoJogadorId = '';
     this.eventoTipo = 'gol';
@@ -172,6 +186,8 @@ export class EliminatoriasComponent implements OnInit {
   }
 
   fecharModal(): void {
+    if (this.modoPublico) return;
+
     this.confrontoSelecionado = null;
     this.modalAberto = false;
     this.eventoJogadorId = '';
@@ -179,6 +195,7 @@ export class EliminatoriasComponent implements OnInit {
 
   registrarEvento(): void {
     if (!this.camp || !this.confrontoSelecionado) return;
+    if (this.modoPublico) return;
 
     const jogador = this.camp.times
       ?.flatMap(t => t.jogadores || [])
@@ -245,6 +262,8 @@ export class EliminatoriasComponent implements OnInit {
   }
 
   finalizarRodada(): void {
+    if (this.modoPublico) return;
+
     if (this.rodadaSelecionada == null) return;
 
     this.mensagem = this.campeonatoService.finalizarRodada(
@@ -255,6 +274,19 @@ export class EliminatoriasComponent implements OnInit {
     this.reload();
     this.atualizarDados();
     this.rodadaSelecionada = this.detectRodadaAtual();
+  }
+  get rodadas(): number[] {
+    if (!this.camp?.confrontos?.length) return [];
+
+    return [...new Set(this.camp.confrontos.map(c => c.rodada))]
+      .sort((a, b) => a - b);
+  }
+
+  get confrontosDaRodada(): Confronto[] {
+    if (!this.camp || !this.camp.confrontos || this.rodadaSelecionada == null) {
+      return [];
+    }
+    return this.camp.confrontos.filter(c => c.rodada === this.rodadaSelecionada);
   }
 
   voltar(): void {

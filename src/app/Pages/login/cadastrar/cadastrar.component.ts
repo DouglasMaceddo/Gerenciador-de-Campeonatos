@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../Services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-cadastrar',
   imports: [CommonModule, FormsModule],
@@ -16,7 +16,7 @@ export class CadastrarComponent {
   confirmPassword: string ='';
   message: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private location: Location, private authService: AuthService, private router: Router) {}
 
   cadastrar() {
     if (this.password !== this.confirmPassword) {
@@ -41,5 +41,9 @@ export class CadastrarComponent {
 
   Login(){
     this.router.navigate(['Login'])
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 }

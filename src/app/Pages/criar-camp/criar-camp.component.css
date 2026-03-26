@@ -1,115 +1,133 @@
+/* Container principal */
 .criar-campeonato {
-  padding: 30px;
-  background-color: #2d6a4f; /* Verde principal */
-  color: white;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('/fundo.jpg') no-repeat center center;
+  background-size: cover;
+
   min-height: 100vh;
-  text-align: center;
+  width: 100%;
+  padding: 30px;
+
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
 }
 
+/* Header */
+header {
+  width: 100%;
+  max-width: 900px;
+}
+
+header button {
+  background: #1b66ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+header button:hover {
+  background: #554af5;
+  transform: scale(1.05);
+}
+
 /* Título */
-h1 {
-  font-size: 2.4rem;
-  margin-bottom: 25px;
+.criar-campeonato h1 {
+  color: #f8f8f8;
+  margin: 20px 0;
+  text-align: center;
 }
 
 /* Formulário */
 .form {
-  margin-bottom: 40px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 100%;
-  max-width: 400px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
 }
 
 /* Labels */
-label {
-  font-size: 1.1rem;
-  text-align: left;
-  width: 100%;
+.form label {
+  color: #e2e8f0;
+  font-size: 0.95rem;
 }
 
-/* Inputs, Textareas, Select */
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 12px;
+/* Inputs e select */
+.form input,
+.form textarea,
+.form select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+
   font-size: 1rem;
-  border-radius: 6px;
-  border: none;
-  outline: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-  box-shadow: 0 0 6px rgba(82, 183, 136, 0.8);
+/* Foco */
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+  box-shadow: 0 0 0 2px #1b66ff;
 }
 
-/* Botões */
-button {
-  padding: 12px;
-  background-color: #52b788;
+/* Botão criar */
+.form button {
+  margin-top: 10px;
+  background: #1b66ff;
   color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
   font-size: 1.1rem;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #40916c;
-}
-
-button:focus {
-  outline: none;
-}
-
-/* Bloco após criar campeonato */
-.campeonato-criado {
-  margin-top: 25px;
-  background-color: #e7f7d9;
-  color: #000;
-  padding: 20px;
+  padding: 12px;
+  border: none;
   border-radius: 10px;
-  width: 95%;
-  max-width: 450px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
+.form button:hover {
+  background: #554af5;
+  transform: scale(1.03);
+}
+
+/* Resultado após criar */
+.campeonato-criado {
+  margin-top: 30px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 25px;
+  width: 100%;
+  max-width: 500px;
+
+  color: #e2e8f0;
+  text-align: center;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Título sucesso */
 .campeonato-criado h2 {
-  color: #2d6a4f;
-  font-size: 1.8rem;
+  color: #15e615;
   margin-bottom: 15px;
 }
 
-/* Responsividade tablet */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  .form {
-    max-width: 100%;
-  }
-}
-
-/* Responsividade celular */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  .campeonato-criado {
-    padding: 15px;
-  }
+/* Texto */
+.campeonato-criado p {
+  margin: 10px 10px;
 }

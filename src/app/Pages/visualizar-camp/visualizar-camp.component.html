@@ -1,4 +1,5 @@
-<div class="home-container">
+<div class="home-container" img src="/fundo.jpg" width="400">
+  
   <button class="voltar-btn" (click)="voltarHome()">Voltar</button>
 
   <div *ngIf="campeonato; else notFound" class="conteudo">
@@ -12,13 +13,15 @@
 
       <hr />
 
-      <button class="acao-btn" (click)="Eliminatorias()"> Gerar Confrontos </button>
+      <button class="acao-btn" (click)="Eliminatorias()"> Confrontos </button>
       <button class="acao-btn"> Adicionar Jogadores </button>
+      <button class="acao-btn" (click)="adicionarTimes()">Adicionar Times</button>
 
       <h3>Times Participantes</h3>
       <ul *ngIf="campeonato.times && campeonato.times.length > 0; else semTimes">
         <li *ngFor="let time of campeonato.times" class="time-card">
-          <div class="time-header"><strong>{{ time.nome }}</strong></div>
+          <div class="time-header"><strong>{{ time.nome }}</strong>
+          </div>
 
           <div class="jogadores">
             <h4>Jogadores</h4>
@@ -40,10 +43,6 @@
       <ng-template #semTimes>
         <p class="info-vazia">Nenhum time cadastrado ainda.</p>
       </ng-template>
-
-      <div class="botoes-acao">
-        <button class="acao-btn" (click)="adicionarTimes()">➕ Adicionar Times</button>
-      </div>
     </div>
   </div>
 

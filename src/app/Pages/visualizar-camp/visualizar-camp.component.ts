@@ -18,7 +18,6 @@ export class VisualizarCampComponent implements OnInit {
   mensagem: string = '';
   classificacao: any[] = [];
   rodadaSelecionada: number | null = null;
-  modalAberto = false;
   confrontoSelecionado: Confronto | null = null;
   eventoJogadorId: string = '';
 

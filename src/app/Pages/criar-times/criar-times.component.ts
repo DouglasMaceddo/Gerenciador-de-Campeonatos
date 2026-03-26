@@ -16,7 +16,13 @@ import { Location } from '@angular/common';
 })
 export class CriarTimesComponent implements OnInit {
   nomeTime: string = '';
-  logoUrl: string = '';
+  time: Time = {
+    id: '',
+    nome: '',
+    imagem: '',
+    jogadores: []
+  };
+  imagem: string | null = null;
   jogadores: Jogador[] = [];
   nomeJogador: string = '';
   posicaoJogador: string = '';
@@ -69,7 +75,7 @@ export class CriarTimesComponent implements OnInit {
     const time: Time = {
       id: this.generateId(),
       nome: this.nomeTime.trim(),
-      logoUrl: this.logoUrl,
+      imagem: this.imagem || undefined,
       jogadores: this.jogadores
     };
 
@@ -80,7 +86,7 @@ export class CriarTimesComponent implements OnInit {
       this.campeonato = this.campeonatoService.getById(this.campeonatoId);
       // limpa form
       this.nomeTime = '';
-      this.logoUrl = '';
+      this.imagem = '';
       this.jogadores = [];
     }
   }
@@ -89,6 +95,27 @@ export class CriarTimesComponent implements OnInit {
     this.location.back();
   }
 
+onImagemSelecionada(event: Event): void {
+  const input = event.target as HTMLInputElement;
+
+  if (!input.files || input.files.length === 0) return;
+
+  const file = input.files[0];
+
+  // valida se é imagem
+  if (!file.type.startsWith('image/')) {
+    this.mensagem = 'Selecione uma imagem válida.';
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+     this.imagem = reader.result as string;
+  };
+
+  reader.readAsDataURL(file);
+}
 
   private generateId(): string {
     try {

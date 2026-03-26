@@ -13,8 +13,15 @@
     <label>Nome do Time:</label>
     <input type="text" [(ngModel)]="nomeTime" placeholder="Nome do Time" />
 
-    <label>Logo URL (opcional):</label>
-    <input type="text" [(ngModel)]="logoUrl" placeholder="https://..." />
+    <div class="upload-escudo">
+      <label>Escudo do Time</label>
+
+      <input type="file" accept="image/*" (change)="onImagemSelecionada($event)">
+
+      <!-- preview -->
+      <img *ngIf="imagem" [src]="imagem" class="escudo-preview">
+    </div>
+
 
     <hr />
 

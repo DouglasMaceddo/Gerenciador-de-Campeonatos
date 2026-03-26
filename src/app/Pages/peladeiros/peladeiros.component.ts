@@ -55,4 +55,10 @@ export class PeladeirosComponent {
   voltarHome(router: string){
       this.router.navigate([router]);
   }
+  
+  removerJogador(index: number): void {
+  if (confirm('Deseja remover este jogador?')) {
+    this.jogadores.splice(index, 1);
+  }
+}
 }

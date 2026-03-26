@@ -148,6 +148,7 @@ export class CampeonatoService {
     }
 
     camp.confrontos = [];
+    camp.artilheiros = [];
     camp.classificacao = [];
     camp.fase = 'grupos';
 

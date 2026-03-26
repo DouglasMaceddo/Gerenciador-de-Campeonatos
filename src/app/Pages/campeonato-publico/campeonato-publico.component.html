@@ -1,0 +1,28 @@
+<div class="lista-container">
+
+  <h1>Campeonatos</h1>
+
+  <button class="voltar-btn" (click)="voltar()">Pagina Inicial</button>
+
+  <div *ngIf="campeonatos.length === 0" class="vazio">
+    Nenhum campeonato criado ainda.
+  </div>
+
+  <div class="grid">
+
+    <div class="card" *ngFor="let camp of campeonatos">
+
+      <h2>{{ camp.nome }}</h2>
+
+      <p><strong >Descrição:</strong> {{ camp.descricao }}</p>
+      <p><strong>Formato:</strong> {{ camp.formato }}</p>
+      <p><strong>Times:</strong> {{ camp.numTimes }}</p>
+
+      <button (click)="visualizar(camp.id)">
+        Ver Campeonato
+      </button>
+
+    </div>
+  </div>
+</div>
+

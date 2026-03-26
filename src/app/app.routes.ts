@@ -8,7 +8,8 @@ import { CadastrarComponent } from './Pages/login/cadastrar/cadastrar.component'
 import { AuthGuard } from './Services/auth-guard.service';
 import { PerfilComponent } from './Pages/perfil/perfil.component';
 import { CriarTimesComponent } from './Pages/criar-times/criar-times.component';
-import { EliminatoriasComponent } from './Pages/eliminatorias/eliminatorias.component';
+import { EliminatoriasComponent } from './Pages/visualizar-camp/eliminatorias/eliminatorias.component';
+import { CampeonatoPublicoComponent } from './Pages/campeonato-publico/campeonato-publico.component';
 
 export const routes: Routes = [
     {
@@ -29,16 +30,17 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path:'Criar_Times/:id',
-        component:CriarTimesComponent,
+        path: 'Criar_Times/:id',
+        component: CriarTimesComponent,
     },
     {
-        path: 'Visualizar_Campeonatos',
+        path: 'Visualizar_Camp/:id',
         component: VisualizarCampComponent
     },
     {
-        path: 'Visualizar_Camp/:id', 
-        component: VisualizarCampComponent
+        path: 'VisualizarCampeonatosPublico',
+        component: CampeonatoPublicoComponent
+        
     },
     {
         path: 'Login',
@@ -54,6 +56,7 @@ export const routes: Routes = [
     },
     {
         path: 'Eliminatorias/:id',
-        component: EliminatoriasComponent
+        component: EliminatoriasComponent,
+        
     }
 ];
