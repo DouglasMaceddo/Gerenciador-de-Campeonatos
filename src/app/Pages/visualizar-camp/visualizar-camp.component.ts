@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { CampeonatoService } from '../../Services/campeonatoService';
 import { Location } from '@angular/common';
 import { Confronto } from '../../Models/confronto.model';
+import { Time } from '../../Models/time.model';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-visualizar-camp',
   imports: [CommonModule, FormsModule],
-  templateUrl:'./visualizar-camp.component.html',
+  templateUrl: './visualizar-camp.component.html',
   styleUrls: ['./visualizar-camp.component.css']
 })
 export class VisualizarCampComponent implements OnInit {
@@ -20,6 +21,13 @@ export class VisualizarCampComponent implements OnInit {
   rodadaSelecionada: number | null = null;
   confrontoSelecionado: Confronto | null = null;
   eventoJogadorId: string = '';
+
+  // ===== Modal: Adicionar Jogador =====
+  modalJogadorAberto = false;
+  timeSelecionado?: Time;
+  novoJogadorNome: string = '';
+  novoJogadorPosicao: string = '';
+  mensagemJogador: string = '';
 
   constructor(
     private router: Router,
@@ -35,7 +43,6 @@ export class VisualizarCampComponent implements OnInit {
       if (this.campeonato) {
         this.classificacao = this.campeonato.classificacao || this.campeonatoService.calcularClassificacao(this.campeonato.id);
         this.rodadaSelecionada = this.detectRodadaAtual();
-
       }
     }
   }
@@ -63,5 +70,57 @@ export class VisualizarCampComponent implements OnInit {
       if (algumNaoFinalizado) return r;
     }
     return rondas[rondas.length - 1] || null;
+  }
+
+  // ===== Modal: Adicionar Jogador =====
+
+  abrirModalJogador(time: Time): void {
+    this.timeSelecionado = time;
+    this.novoJogadorNome = '';
+    this.novoJogadorPosicao = '';
+    this.mensagemJogador = '';
+    this.modalJogadorAberto = true;
+  }
+
+  fecharModalJogador(): void {
+    this.modalJogadorAberto = false;
+    this.timeSelecionado = undefined;
+  }
+
+  confirmarAdicionarJogador(): void {
+    if (!this.campeonato || !this.timeSelecionado) return;
+
+    const nome = this.novoJogadorNome.trim();
+    if (!nome) {
+      this.mensagemJogador = 'Informe o nome do jogador.';
+      return;
+    }
+
+    const jogador = {
+      id: crypto.randomUUID(),
+      nome,
+      posicao: this.novoJogadorPosicao.trim() || undefined
+    };
+
+    const resultado = this.campeonatoService.addJogador(
+      this.campeonato.id,
+      this.timeSelecionado.id,
+      jogador
+    );
+
+    // Recarrega o campeonato atualizado do storage
+    this.campeonato = this.campeonatoService.getById(this.campeonato.id);
+
+    if (resultado.includes('sucesso')) {
+      this.fecharModalJogador();
+    } else {
+      this.mensagemJogador = resultado;
+    }
+  }
+
+  removerJogador(time: Time, jogadorId: string): void {
+    if (!this.campeonato) return;
+    this.campeonatoService.removeJogador(this.campeonato.id, time.id, jogadorId);
+    this.campeonato = this.campeonatoService.getById(this.campeonato.id);
   }
 }

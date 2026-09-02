@@ -1,5 +1,5 @@
-<div class="home-container" img src="/fundo.jpg" width="400">
-  
+<div class="home-container">
+
   <button class="voltar-btn" (click)="voltarHome()">Voltar</button>
 
   <div *ngIf="campeonato; else notFound" class="conteudo">
@@ -30,12 +30,20 @@
               <li *ngFor="let jogador of time.jogadores" class="jogador-item">
                 {{ jogador.nome }}
                 <small *ngIf="jogador.posicao">({{ jogador.posicao }})</small>
+                <\<span>
+                  <button class="remover-jogador-btn" (click)="removerJogador(time, jogador.id)"
+                    title="Remover jogador">
+                    ✕
+                  </button>
+                  </span>
               </li>
             </ul>
-
             <ng-template #semJogadores>
               <p class="info-vazia">Nenhum jogador cadastrado.</p>
             </ng-template>
+            <button class="acao-btn-pequeno" (click)="abrirModalJogador(time)">
+              + Adicionar Jogador
+            </button>
           </div>
         </li>
       </ul>
@@ -50,4 +58,23 @@
     <p class="info-vazia">Campeonato não encontrado.</p>
   </ng-template>
 
+  <!-- ===== MODAL: Adicionar Jogador ===== -->
+  <div class="modal-backdrop" *ngIf="modalJogadorAberto">
+    <div class="modal">
+      <h3>Adicionar Jogador — {{ timeSelecionado?.nome }}</h3>
+
+      <label>Nome do jogador</label>
+      <input type="text" [(ngModel)]="novoJogadorNome" placeholder="Ex: João Silva" />
+
+      <label>Posição (opcional)</label>
+      <input type="text" [(ngModel)]="novoJogadorPosicao" placeholder="Ex: Atacante" />
+
+      <p *ngIf="mensagemJogador" class="mensagem-erro">{{ mensagemJogador }}</p>
+
+      <div class="modal-acoes">
+        <button class="acao-btn" (click)="confirmarAdicionarJogador()">Salvar</button>
+        <button class="fechar" (click)="fecharModalJogador()">Cancelar</button>
+      </div>
+    </div>
+  </div>
 </div>

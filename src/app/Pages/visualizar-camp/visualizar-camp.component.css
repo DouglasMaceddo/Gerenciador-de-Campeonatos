@@ -1,7 +1,9 @@
+/* ===== Container principal com imagem de fundo ===== */
 .home-container {
   background:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url('/fundo.jpg') no-repeat center center;
+  background-color: #c21010e1;
   background-size: cover;
   min-height: 100vh;
   width: 100%;
@@ -12,17 +14,19 @@
   align-items: center;
 }
 
-/* Botão voltar */
+/* ===== Botão Voltar ===== */
 .voltar-btn {
   align-self: flex-start;
-  background: #1b66ff;
-  color: white;
-  padding: 10px 20px;
+  background: linear-gradient(#1b66ff);
+  color: #f6f7f8;
+  padding: 8px 15px;
   border: none;
   border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
   margin-bottom: 20px;
-  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: background var(--transicao-padrao), transform var(--transicao-padrao);
 }
 
 .voltar-btn:hover {
@@ -30,47 +34,64 @@
   transform: scale(1.05);
 }
 
-/* Container principal */
+.voltar-btn:active {
+  transform: scale(0.97);
+}
+
+/* ===== Card de conteúdo principal ===== */
 .conteudo {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(6px);
-  border-radius: 12px;
-  padding: 30px;
+  border-radius: 14px;
+  padding: 35px;
   width: 100%;
   max-width: 900px;
-  color: #e2e8f0;
-
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  color: var(--cor-texto);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
-/* Títulos */
-.conteudo h2 {
-  color: #ffffff;
-  margin-bottom: 30px;
+/* ===== Bloco de informações + times ===== */
+.layout-duas-colunas h2 {
+  color: #000000;
   text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
 }
 
-.conteudo h3 {
+.layout-duas-colunas p {
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.layout-duas-colunas p strong {
+  color: var(--cor-destaque-secundaria);
+  margin-right: 4px;
+}
+
+.layout-duas-colunas hr {
+  margin: 22px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.layout-duas-colunas h3 {
   margin-top: 25px;
-  margin-bottom: 10px;
-  color: #ffffff;
+  margin-bottom: 15px;
+  color: #000000;
+  font-size: 1.3rem;
 }
 
-.conteudo h4 {
-  margin-top: 10px;
-  color: #38bdf8;
-}
-
-/* Botões de ação */
+/* ===== Botões de ação ===== */
 .acao-btn {
   background: linear-gradient(#1b66ff);
-  color: white;
+  color: #f2f3f7;
   font-size: 1rem;
   padding: 10px 20px;
-  margin: 10px 5px;
+  margin: 6px 8px 6px 0;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: background var(--transicao-padrao), transform var(--transicao-padrao);
 }
 
 .acao-btn:hover {
@@ -78,50 +99,104 @@
   transform: scale(1.05);
 }
 
-.layout-duas-colunas ul {
+.acao-btn:active {
+  transform: scale(0.97);
+}
+
+.acao-btn:focus-visible,
+.voltar-btn:focus-visible {
+  outline: 2px solid var(--cor-destaque-secundaria);
+  outline-offset: 3px;
+}
+
+/* ===== Grid de times ===== */
+.layout-duas-colunas > ul {
   list-style: none;
   padding: 0;
+  margin-top: 10px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
 }
 
-/* Card do time */
+/* ===== Card de cada time ===== */
 .time-card {
-  background: rgba(2, 6, 23, 0.8);
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 15px;
-
+  background: linear-gradient(#94b2ec);
+  border-radius: var(--radius-padrao);
+  padding: 16px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: transform var(--transicao-padrao), box-shadow var(--transicao-padrao);
 }
 
-/* Nome do time */
+.time-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
+}
+
 .time-header {
-  font-size: 1.2rem;
-  color: #facc15;
-  margin-bottom: 8px;
+  font-size: 1.15rem;
+  color: var(--cor-destaque);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Jogadores */
-.jogadores {
-  padding-left: 10px;
+/* ===== Jogadores dentro do time ===== */
+.jogadores h4 {
+  margin: 0 0 8px;
+  color: var(--cor-destaque-secundaria);
+  font-size: 1rem;
+}
+
+.jogadores ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .jogador-item {
-  margin: 4px 0;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Texto quando vazio */
+.jogador-item:last-child {
+  border-bottom: none;
+}
+
+.jogador-item small {
+  color: var(--cor-texto-suave);
+  margin-left: 6px;
+}
+
+/* ===== Estado vazio ===== */
 .info-vazia {
-  color: #94a3b8;
+  color: var(--cor-texto-suave);
   font-style: italic;
+  text-align: center;
+  padding: 12px 0;
 }
 
-/* Linha separadora */
-hr {
-  margin: 20px 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* ===== Responsivo ===== */
+@media (max-width: 640px) {
+  .home-container {
+    padding: 16px;
+  }
+
+  .conteudo {
+    padding: 20px;
+  }
+
+  .acao-btn {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  .layout-duas-colunas > ul {
+    grid-template-columns: 1fr;
+  }
 }

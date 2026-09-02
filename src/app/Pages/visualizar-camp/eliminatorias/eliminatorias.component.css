@@ -15,11 +15,11 @@
 /* BOTÃO VOLTAR */
 .voltar {
   align-self: flex-start;
-  background: #ef4444;
+  background: #1b66ff;
 }
 
 .voltar:hover {
-  background: #dc2626;
+  background:#554af5;
 }
 
 /* INFO */
@@ -175,5 +175,5 @@
 }
 
 .fechar {
-  background: #ef4444;
+  background: #1b66ff;
 }

@@ -11,7 +11,7 @@ import { CampeonatoService } from '../../../Services/campeonatoService';
   selector: 'app-eliminatorias',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './eliminatorias.component.html',
+  templateUrl:'./eliminatorias.component.html',
   styleUrl: './eliminatorias.component.css'
 })
 export class EliminatoriasComponent implements OnInit {

@@ -70,10 +70,6 @@ export class CampeonatoService {
             break;
         }
       }
-
-      camp.artilheiros = Object.values(mapa).sort(
-        (a: any, b: any) => b.gols - a.gols
-      );
     }
 
     camp.artilheiros = Object.values(mapa).sort(
@@ -274,11 +270,6 @@ export class CampeonatoService {
     }
 
     return c.penaltisA > c.penaltisB ? c.timeA : c.timeB;
-  }
-
-
-  private gerarPenaltis(): number {
-    return Math.floor(Math.random() * 5) + 1; // 1 a 5
   }
 
   gerarSemis(camp: Campeonato): string {
